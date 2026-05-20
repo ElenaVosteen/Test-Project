@@ -12,6 +12,7 @@ pipeline {
         nodejs 'NodeJS-18'
     }
     
+    
     // 3. Переменные окружения.
     // CI = 'true' — это стандарт для многих инструментов (включая Playwright), 
     // означает что работа идет не на компьютере человека, а внутри робота-автоматизатора - сервера.
@@ -54,6 +55,12 @@ pipeline {
                 sh 'npm ci'
                 // Устанавливаем сам браузер Chromium, в котором Playwright будет «тыкать» кнопки.
                 sh 'npx playwright install chromium'
+            }
+        }
+
+        stage('Install Browsers') {
+            steps {
+                sh 'npx playwright install'
             }
         }
         
