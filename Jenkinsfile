@@ -18,6 +18,9 @@ pipeline {
     environment {
         CI = 'true'
     }
+    options {
+        skipDefaultCheckout(true)
+    }
     
     stages {
         // ЭТАП 1: Получение кода
