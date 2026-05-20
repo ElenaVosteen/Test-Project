@@ -3,7 +3,13 @@ pipeline {
     // "agent any" означает: выполни этот код на любом свободном сервере (агенте) Jenkins.
 
     //test
-    agent any
+    //agent any // replaced to docker
+    agent {
+        docker {
+            image 'mcr.microsoft.com/playwright:v1.52.0-noble'
+            args '--user root'
+        }
+    }
     
     // 2. Инструменты (Tools). 
     // Чтобы Jenkins понимал команду 'npm', мы просим его заранее подготовить Node.js.
@@ -41,10 +47,10 @@ pipeline {
                 // Мы запускаем их установку через apt-get. 
                 // ' true' в конце — это хитрость, 
                 // чтобы билд не упал, если база пакетов уже обновлена.
-                sh '''
-                    apt-get update
-                    apt-get install -y libglib2.0-0 libnss3 libatk-bridge2.0-0 libdrm-dev libxkbcommon-dev libgbm-dev libasound-dev libxshmfence-dev libxrandr2 libx11-6 libxcomposite1 libxdamage1 libxext6 libxfixes3 libatk1.0-0 libcups2 libdbus-1-3 libxcb1 libxkbcommon0 || true
-                '''
+                //sh '''
+                    //apt-get update
+                //    apt-get install -y libglib2.0-0 libnss3 libatk-bridge2.0-0 libdrm-dev libxkbcommon-dev libgbm-dev libasound-dev libxshmfence-dev libxrandr2 libx11-6 libxcomposite1 libxdamage1 libxext6 libxfixes3 libatk1.0-0 libcups2 libdbus-1-3 libxcb1 libxkbcommon0 || true
+                //'''
             }
         }
         
@@ -52,17 +58,18 @@ pipeline {
         stage('Install Dependencies') {
             steps {
                 // 'npm ci' — это как 'npm install', но для роботов. Она устанавливает пакеты строго по файлу package-lock.json.
-                sh 'npm ci'
+                sh 'npm ci' // changed to npm install
+                //sh 'npm install'
                 // Устанавливаем сам браузер Chromium, в котором Playwright будет «тыкать» кнопки.
-                sh 'npx playwright install chromium'
+                //sh 'npx playwright install chromium'
             }
         }
 
-        stage('Install Browsers') {
-            steps {
-                sh 'npx playwright install'
-            }
-        }
+       // stage('Install Browsers') {
+          //  steps {
+          //      sh 'npx playwright install'
+       //     }
+       // }
         
         // ЭТАП 4: Запуск тестов
         stage('Run Tests') {
