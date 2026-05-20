@@ -6,7 +6,7 @@ pipeline {
     //agent any // replaced to docker
     agent {
         docker {
-            image 'mcr.microsoft.com/playwright:v1.52.0-noble'
+            image 'mcr.microsoft.com/playwright:v1.60.0-noble'
             args '--user root'
         }
     }
