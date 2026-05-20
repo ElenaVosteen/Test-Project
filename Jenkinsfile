@@ -41,7 +41,7 @@ pipeline {
                 // ' true' в конце — это хитрость, 
                 // чтобы билд не упал, если база пакетов уже обновлена.
                 sh '''
-                    apt-get update  true
+                    apt-get update
                     apt-get install -y libglib2.0-0 libnss3 libatk-bridge2.0-0 libdrm-dev libxkbcommon-dev libgbm-dev libasound-dev libxshmfence-dev libxrandr2 libx11-6 libxcomposite1 libxdamage1 libxext6 libxfixes3 libatk1.0-0 libcups2 libdbus-1-3 libxcb1 libxkbcommon0 || true
                 '''
             }
